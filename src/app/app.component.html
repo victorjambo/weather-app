@@ -1,20 +1,24 @@
 <div class="w-full h-screen bg-indigo-700 flex flex-col justify-center items-center text-white">
   <div class="pb-8 relative">
-    <input class="shadow-sm pl-4 py-3 pr-10 rounded-full bg-indigo-500 focus-visible:outline-indigo-900 block w-full"
-      placeholder="Search City" />
-    <button class="text-2xl font-extralight absolute top-1.5 right-0 flex items-center px-3 rounded-full" *ngIf="14 > 15">
+    <form #form="ngForm" (submit)="onSubmit()">
+      <input class="shadow-sm pl-4 py-3 pr-10 rounded-full bg-indigo-500 focus-visible:outline-indigo-900 block w-full"
+        placeholder="Search City" name="city" [(ngModel)]="cityName" />
+    </form>
+    <button class="text-2xl font-extralight absolute top-1.5 right-0 flex items-center px-3 rounded-full"
+      *ngIf="cityName" (click)="clearCityName()">
       &times;
     </button>
   </div>
 
   <div class="w-[400px] h-[80vh] bg-indigo-600 rounded-3xl shadow-2xl">
     <div class="flex flex-col h-full">
-      <div class="h-1/2 rounded-t-3xl bg-cover bg-center bg-no-repeat" [ngClass]="14 > 15 ? 'bg-sunny' : 'bg-cold'">
+      <div class="h-1/2 rounded-t-3xl bg-cover bg-center bg-no-repeat"
+        [ngClass]="weatherData?.temp||14 > 15 ? 'bg-sunny' : 'bg-cold'">
         <div class="flex justify-center items-center rounded-t-3xl bg-black w-full h-full bg-opacity-40">
           <div class="text-center">
-            <div class="text-xl">Nairobi</div>
+            <div class="text-xl">{{weatherData?.name}}</div>
             <div class="text-6xl font-semibold">
-              14°C
+              {{weatherData?.temp | number: '1.0-0'}}°C
             </div>
           </div>
         </div>
@@ -25,20 +29,20 @@
           <div class="grid grid-cols-2 bg-indigo-500 h-full rounded-b-3xl text-lg">
             <div class="flex justify-center items-center h-full space-x-2">
               <img ngSrc="/assets/min.svg" alt="min" height="40" width="40" />
-              <span>19°C</span>
+              <span>{{weatherData?.temp_min | number: '1.0-0'}}°C</span>
             </div>
             <div class="flex justify-center items-center h-full space-x-2">
               <img ngSrc="/assets/max.svg" alt="max" height="40" width="40" />
-              <span>20°C</span>
+              <span>{{weatherData?.temp_max | number: '1.0-0'}}°C</span>
             </div>
             <div class="flex justify-center items-center h-full space-x-2">
               <img ngSrc="/assets/humidity.svg" alt="max" height="40" width="40" />
-              <span>85%</span>
+              <span>{{weatherData?.humidity | number: '1.0-0'}}%</span>
             </div>
             <div class="flex justify-center items-center h-full space-x-2">
               <img ngSrc="/assets/wind.svg" alt="max" height="40" width="40" />
               <span class="flex flex-col -space-y-2 items-center">
-                <span>11.83</span>
+                <span>{{weatherData?.wind | number: '1.0-0'}}</span>
                 <span class="text-sm">km/h</span>
               </span>
             </div>
